@@ -59,6 +59,18 @@ st.markdown("""
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.5px;
+        display: inline-block;
+    }
+    .badge-peak {
+        background-color: #f59e0b;
+        color: #111827;
+        padding: 3px 9px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: inline-block;
     }
     .badge-tendon {
         background-color: #00d4ff;
@@ -68,6 +80,7 @@ st.markdown("""
         font-size: 0.75rem;
         font-weight: 700;
         text-transform: uppercase;
+        display: inline-block;
     }
     .badge-acc {
         background-color: #10b981;
@@ -77,6 +90,7 @@ st.markdown("""
         font-size: 0.75rem;
         font-weight: 700;
         text-transform: uppercase;
+        display: inline-block;
     }
     .weight-highlight {
         font-size: 1.5rem;
@@ -126,90 +140,69 @@ st.markdown("""
 BASE_IMG_URL = "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises"
 
 def gerar_svg_biomecanico(tipo):
-    """Gera uma ilustração vetorial animada (SVG) destacando vetores de força e tendões."""
+    """Gera uma ilustração vetorial animada (SVG) sem recuo excessivo."""
     svgs = {
-        "squat": """
-        <svg viewBox="0 0 260 180" width="100%" height="170" style="background:#11141c; border-radius:10px; border:1px solid #2d3748;">
-            <style>
-                @keyframes squatMove { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(28px); } }
-                .lifter { animation: squatMove 3.5s infinite ease-in-out; }
-            </style>
-            <text x="12" y="22" fill="#94a3b8" font-size="11" font-family="sans-serif">VETOR AXIAL &amp; TENDÃO PATELAR (AZUL)</text>
-            <line x1="30" y1="155" x2="230" y2="155" stroke="#475569" stroke-width="3"/>
-            <g class="lifter">
-                <!-- Barra Olímpica -->
-                <line x1="75" y1="55" x2="185" y2="55" stroke="#ff9f1c" stroke-width="5"/>
-                <rect x="82" y="42" width="10" height="26" fill="#ff4b4b" rx="2"/>
-                <rect x="168" y="42" width="10" height="26" fill="#ff4b4b" rx="2"/>
-                <!-- Cabeça e Tronco -->
-                <circle cx="130" cy="40" r="10" fill="#e2e8f0"/>
-                <line x1="130" y1="52" x2="115" y2="100" stroke="#e2e8f0" stroke-width="6" stroke-linecap="round"/>
-                <!-- Fêmur -->
-                <line x1="115" y1="100" x2="148" y2="118" stroke="#cbd5e1" stroke-width="6" stroke-linecap="round"/>
-                <!-- Tendão Patelar / Joelho em destaque -->
-                <circle cx="148" cy="118" r="6" fill="#00d4ff"/>
-            </g>
-            <!-- Tíbia fixa à base -->
-            <line x1="148" y1="132" x2="135" y2="155" stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/>
-            <text x="158" y="135" fill="#00d4ff" font-size="10" font-weight="bold" font-family="sans-serif">← Tendão Patelar</text>
-        </svg>
-        """,
-        "bench": """
-        <svg viewBox="0 0 260 180" width="100%" height="170" style="background:#11141c; border-radius:10px; border:1px solid #2d3748;">
-            <style>
-                @keyframes benchMove { 0%, 100% { transform: translateY(0px); } 45%, 65% { transform: translateY(32px); } }
-                .barbell { animation: benchMove 4s infinite ease-in-out; }
-            </style>
-            <text x="12" y="22" fill="#94a3b8" font-size="11" font-family="sans-serif">PAUSA NO ESTERNO &amp; TENDÃO PEITORAL/TRÍCEPS</text>
-            <!-- Banco -->
-            <rect x="55" y="115" width="140" height="10" fill="#475569" rx="3"/>
-            <line x1="75" y1="125" x2="75" y2="160" stroke="#475569" stroke-width="5"/>
-            <line x1="175" y1="125" x2="175" y2="160" stroke="#475569" stroke-width="5"/>
-            <!-- Tronco Arqueado -->
-            <path d="M 75 110 Q 120 95 160 112" stroke="#e2e8f0" stroke-width="10" fill="none" stroke-linecap="round"/>
-            <circle cx="65" cy="108" r="9" fill="#e2e8f0"/>
-            <!-- Ombro/Tendão -->
-            <circle cx="105" cy="104" r="6" fill="#00d4ff"/>
-            <g class="barbell">
-                <line x1="105" y1="60" x2="105" y2="95" stroke="#00d4ff" stroke-width="5" stroke-linecap="round"/>
-                <circle cx="105" cy="55" r="14" fill="#ff4b4b" stroke="#ff9f1c" stroke-width="3"/>
-            </g>
-            <text x="128" y="88" fill="#00d4ff" font-size="10" font-weight="bold" font-family="sans-serif">← Pausa no Peito (0 impulso)</text>
-        </svg>
-        """,
-        "deadlift": """
-        <svg viewBox="0 0 260 180" width="100%" height="170" style="background:#11141c; border-radius:10px; border:1px solid #2d3748;">
-            <style>
-                @keyframes dlMove { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-30px); } }
-                .pull { animation: dlMove 3.5s infinite ease-in-out; }
-            </style>
-            <text x="12" y="22" fill="#94a3b8" font-size="11" font-family="sans-serif">CUNHA DE QUADRIL &amp; CADEIA POSTERIOR</text>
-            <line x1="30" y1="155" x2="230" y2="155" stroke="#475569" stroke-width="3"/>
-            <!-- Tíbia vertical -->
-            <line x1="125" y1="155" x2="125" y2="118" stroke="#cbd5e1" stroke-width="6"/>
-            <g class="pull">
-                <!-- Quadril e Coluna Neutra -->
-                <circle cx="100" cy="100" r="6" fill="#00d4ff"/>
-                <line x1="100" y1="100" x2="142" y2="62" stroke="#e2e8f0" stroke-width="7" stroke-linecap="round"/>
-                <circle cx="150" cy="52" r="9" fill="#e2e8f0"/>
-                <!-- Braço reto como cabo de aço -->
-                <line x1="138" y1="68" x2="132" y2="132" stroke="#00d4ff" stroke-width="4"/>
-                <!-- Anilha Olímpica -->
-                <circle cx="132" cy="132" r="20" fill="#ff4b4b" stroke="#ff9f1c" stroke-width="3"/>
-            </g>
-            <text x="158" y="105" fill="#00d4ff" font-size="10" font-weight="bold" font-family="sans-serif">← Barra colada na canela</text>
-        </svg>
-        """,
-        "default": """
-        <svg viewBox="0 0 260 160" width="100%" height="150" style="background:#11141c; border-radius:10px; border:1px solid #2d3748;">
-            <text x="15" y="28" fill="#00d4ff" font-size="12" font-weight="bold" font-family="sans-serif">CONTROLE EXCÊNTRICO &amp; TENSÃO TENDÍNEA</text>
-            <rect x="25" y="55" width="210" height="18" rx="9" fill="#1e293b"/>
-            <rect x="25" y="55" width="165" height="18" rx="9" fill="#00d4ff"/>
-            <text x="25" y="95" fill="#e2e8f0" font-size="11" font-family="sans-serif">• Descida controlada (2 a 3s): Remodela colágeno Tipo 1</text>
-            <text x="25" y="118" fill="#ff9f1c" font-size="11" font-family="sans-serif">• Subida explosiva (CAT): Máximo recrutamento motor</text>
-            <text x="25" y="140" fill="#10b981" font-size="11" font-family="sans-serif">• Estabilidade articular: Sem compensação lombar</text>
-        </svg>
-        """
+        "squat": (
+            '<svg viewBox="0 0 260 180" width="100%" height="170" style="background:#11141c; border-radius:10px; border:1px solid #2d3748;">'
+            '<style>@keyframes squatMove { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(28px); } } .lifter { animation: squatMove 3.5s infinite ease-in-out; }</style>'
+            '<text x="12" y="22" fill="#94a3b8" font-size="11" font-family="sans-serif">VETOR AXIAL &amp; TENDÃO PATELAR (AZUL)</text>'
+            '<line x1="30" y1="155" x2="230" y2="155" stroke="#475569" stroke-width="3"/>'
+            '<g class="lifter">'
+            '<line x1="75" y1="55" x2="185" y2="55" stroke="#ff9f1c" stroke-width="5"/>'
+            '<rect x="82" y="42" width="10" height="26" fill="#ff4b4b" rx="2"/>'
+            '<rect x="168" y="42" width="10" height="26" fill="#ff4b4b" rx="2"/>'
+            '<circle cx="130" cy="40" r="10" fill="#e2e8f0"/>'
+            '<line x1="130" y1="52" x2="115" y2="100" stroke="#e2e8f0" stroke-width="6" stroke-linecap="round"/>'
+            '<line x1="115" y1="100" x2="148" y2="118" stroke="#cbd5e1" stroke-width="6" stroke-linecap="round"/>'
+            '<circle cx="148" cy="118" r="6" fill="#00d4ff"/>'
+            '</g>'
+            '<line x1="148" y1="132" x2="135" y2="155" stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/>'
+            '<text x="158" y="135" fill="#00d4ff" font-size="10" font-weight="bold" font-family="sans-serif">← Tendão Patelar</text>'
+            '</svg>'
+        ),
+        "bench": (
+            '<svg viewBox="0 0 260 180" width="100%" height="170" style="background:#11141c; border-radius:10px; border:1px solid #2d3748;">'
+            '<style>@keyframes benchMove { 0%, 100% { transform: translateY(0px); } 45%, 65% { transform: translateY(32px); } } .barbell { animation: benchMove 4s infinite ease-in-out; }</style>'
+            '<text x="12" y="22" fill="#94a3b8" font-size="11" font-family="sans-serif">PAUSA NO ESTERNO &amp; TENDÃO PEITORAL/TRÍCEPS</text>'
+            '<rect x="55" y="115" width="140" height="10" fill="#475569" rx="3"/>'
+            '<line x1="75" y1="125" x2="75" y2="160" stroke="#475569" stroke-width="5"/>'
+            '<line x1="175" y1="125" x2="175" y2="160" stroke="#475569" stroke-width="5"/>'
+            '<path d="M 75 110 Q 120 95 160 112" stroke="#e2e8f0" stroke-width="10" fill="none" stroke-linecap="round"/>'
+            '<circle cx="65" cy="108" r="9" fill="#e2e8f0"/>'
+            '<circle cx="105" cy="104" r="6" fill="#00d4ff"/>'
+            '<g class="barbell">'
+            '<line x1="105" y1="60" x2="105" y2="95" stroke="#00d4ff" stroke-width="5" stroke-linecap="round"/>'
+            '<circle cx="105" cy="55" r="14" fill="#ff4b4b" stroke="#ff9f1c" stroke-width="3"/>'
+            '</g>'
+            '<text x="128" y="88" fill="#00d4ff" font-size="10" font-weight="bold" font-family="sans-serif">← Pausa no Peito (0 impulso)</text>'
+            '</svg>'
+        ),
+        "deadlift": (
+            '<svg viewBox="0 0 260 180" width="100%" height="170" style="background:#11141c; border-radius:10px; border:1px solid #2d3748;">'
+            '<style>@keyframes dlMove { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-30px); } } .pull { animation: dlMove 3.5s infinite ease-in-out; }</style>'
+            '<text x="12" y="22" fill="#94a3b8" font-size="11" font-family="sans-serif">CUNHA DE QUADRIL &amp; CADEIA POSTERIOR</text>'
+            '<line x1="30" y1="155" x2="230" y2="155" stroke="#475569" stroke-width="3"/>'
+            '<line x1="125" y1="155" x2="125" y2="118" stroke="#cbd5e1" stroke-width="6"/>'
+            '<g class="pull">'
+            '<circle cx="100" cy="100" r="6" fill="#00d4ff"/>'
+            '<line x1="100" y1="100" x2="142" y2="62" stroke="#e2e8f0" stroke-width="7" stroke-linecap="round"/>'
+            '<circle cx="150" cy="52" r="9" fill="#e2e8f0"/>'
+            '<line x1="138" y1="68" x2="132" y2="132" stroke="#00d4ff" stroke-width="4"/>'
+            '<circle cx="132" cy="132" r="20" fill="#ff4b4b" stroke="#ff9f1c" stroke-width="3"/>'
+            '</g>'
+            '<text x="158" y="105" fill="#00d4ff" font-size="10" font-weight="bold" font-family="sans-serif">← Barra colada na canela</text>'
+            '</svg>'
+        ),
+        "default": (
+            '<svg viewBox="0 0 260 160" width="100%" height="150" style="background:#11141c; border-radius:10px; border:1px solid #2d3748;">'
+            '<text x="15" y="28" fill="#00d4ff" font-size="12" font-weight="bold" font-family="sans-serif">CONTROLE EXCÊNTRICO &amp; TENSÃO TENDÍNEA</text>'
+            '<rect x="25" y="55" width="210" height="18" rx="9" fill="#1e293b"/>'
+            '<rect x="25" y="55" width="165" height="18" rx="9" fill="#00d4ff"/>'
+            '<text x="25" y="95" fill="#e2e8f0" font-size="11" font-family="sans-serif">• Descida controlada (2 a 3s): Remodela colágeno Tipo 1</text>'
+            '<text x="25" y="118" fill="#ff9f1c" font-size="11" font-family="sans-serif">• Subida explosiva (CAT): Máximo recrutamento motor</text>'
+            '<text x="25" y="140" fill="#10b981" font-size="11" font-family="sans-serif">• Estabilidade articular: Sem compensação lombar</text>'
+            '</svg>'
+        )
     }
     return svgs.get(tipo, svgs["default"])
 
@@ -317,7 +310,7 @@ CATALOGO_EXERCICIOS = {
         "imgs": [f"{BASE_IMG_URL}/Bent_Over_Barbell_Row/0.jpg", f"{BASE_IMG_URL}/Bent_Over_Barbell_Row/1.jpg"],
         "svg": "default",
         "musculos": "Dorsais, Romboides, Trapézio Médio/Inferior, Eretores da Espinha e Posterior de Ombro",
-        "tendoes": " Inserções Escapulares, Fáscia Toracolombar e Tendão Braquiorradial",
+        "tendoes": "Inserções Escapulares, Fáscia Toracolombar e Tendão Braquiorradial",
         "execucao": [
             "Posicione o tronco praticamente paralelo ao chão com os joelhos semiflexionados e lombar travada.",
             "A barra começa parada no chão a cada repetição.",
@@ -444,14 +437,12 @@ CATALOGO_EXERCICIOS = {
     }
 }
 
-# Modal interativo ao clicar em qualquer exercício
 @st.dialog("📸 Guia Visual & Biomecânica do Exercício")
 def abrir_modal_exercicio(chave_ex):
     dados = CATALOGO_EXERCICIOS.get(chave_ex, CATALOGO_EXERCICIOS["Agachamento Livre"])
     st.markdown(f"### {dados['titulo']}")
     st.caption(f"🎯 **Músculos:** {dados['musculos']}  \n🧬 **Tendões Blindados:** {dados['tendoes']}")
 
-    # Exibe fotos reais (Posição Inicial e Final) se disponíveis
     if len(dados["imgs"]) >= 2:
         c_img1, c_img2 = st.columns(2)
         with c_img1:
@@ -461,7 +452,6 @@ def abrir_modal_exercicio(chave_ex):
     elif len(dados["imgs"]) == 1:
         st.image(dados["imgs"][0], caption="Posição de Execução", use_container_width=True)
 
-    # Exibe Diagrama Biomecânico Animado (SVG offline garantido)
     st.markdown("#### ⚙️ Vetor Biomecânico & Alvo Tendíneo")
     st.markdown(gerar_svg_biomecanico(dados["svg"]), unsafe_allow_html=True)
 
@@ -550,7 +540,7 @@ if "dados_carregados" not in st.session_state:
     st.session_state.dados_carregados = True
 
 # -------------------------------------------------------------
-# FUNÇÕES DE CÁLCULO BIOMECÂNICO E ANILHAS
+# FUNÇÕES DE CÁLCULO BIOMECÂNICO E CONSTRUÇÃO DE CARTÕES HTML
 # -------------------------------------------------------------
 def arredondar_carga(peso, passo=2.5):
     return round(peso / passo) * passo
@@ -568,6 +558,31 @@ def calcular_anilhas(peso_total, barra=20.0):
             resultado.append(f"{qtd}×{anilha:g}kg")
             restante = round(restante - (qtd * anilha), 2)
     return " + ".join(resultado) + " (cada lado)"
+
+def montar_card_principal(badge_texto, titulo_ex, peso_trab, series_reps, rpe_trab, barra_kg, dica_descanso, info_single=None, um_rm=0.0):
+    """Monta o HTML do cartão principal sem indentação para evitar erro de bloco de código no Streamlit."""
+    bloco_single = ""
+    if info_single:
+        peso_s = arredondar_carga(um_rm * info_single[0])
+        anilhas_s = calcular_anilhas(peso_s, barra_kg)
+        bloco_single = (
+            f'<hr style="border-color:#333a4d; margin:12px 0;">'
+            f'<span class="badge-peak">⚡ Single de Pico Neural</span>'
+            f'<div class="weight-highlight">{peso_s:.1f} kg — {info_single[1]} ({info_single[2]})</div>'
+            f'<div class="plate-box">💿 Barra: {anilhas_s}</div>'
+        )
+
+    html = (
+        f'<div class="workout-card">'
+        f'<span class="badge-main">{badge_texto}</span>'
+        f'<h4 style="margin:6px 0 2px 0;">{titulo_ex}</h4>'
+        f'<div class="weight-highlight">{peso_trab:.1f} kg — {series_reps} ({rpe_trab})</div>'
+        f'<div class="plate-box">💿 Barra: {calcular_anilhas(peso_trab, barra_kg)}</div>'
+        f'<p style="font-size:0.85rem; color:#94a3b8; margin-top:8px; margin-bottom:0;">{dica_descanso}</p>'
+        f'{bloco_single}'
+        f'</div>'
+    )
+    return html
 
 def gerar_rampagem(nome, carga_alvo, barra=20.0):
     if "terra" in nome.lower() or "deadlift" in nome.lower():
@@ -880,70 +895,62 @@ with aba_treino:
         sq_peso = arredondar_carga(st.session_state.sq_1rm * cfg["sq_main"][0])
         st.markdown("### 🦵 Segunda-Feira: Agachamento, Tração & Pegada")
         
-        st.markdown("""
-        <div class="tendon-card">
-            <span class="badge-tendon">1. Ativação de Tendões (Pré-Barra)</span>
-            <p style="margin-top:8px; margin-bottom:4px;"><b>• Nutrição (45m antes):</b> 15g Colágeno Tipo 1 + 100mg Vitamina C</p>
-            <p style="margin-bottom:4px;"><b>• Tendão Patelar:</b> Wall Sit (Cadeirinha isométrica a 90°) — 2 × 40 segundos</p>
-            <p style="margin-bottom:0px;"><b>• Tendão de Aquiles:</b> Isometria de Panturrilha Unipodal no degrau — 2 × 30s/pé</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            '<div class="tendon-card">'
+            '<span class="badge-tendon">1. Ativação de Tendões (Pré-Barra)</span>'
+            '<p style="margin-top:8px; margin-bottom:4px;"><b>• Nutrição (45m antes):</b> 15g Colágeno Tipo 1 + 100mg Vitamina C</p>'
+            '<p style="margin-bottom:4px;"><b>• Tendão Patelar:</b> Wall Sit (Cadeirinha isométrica a 90°) — 2 × 40 segundos</p>'
+            '<p style="margin-bottom:0px;"><b>• Tendão de Aquiles:</b> Isometria de Panturrilha Unipodal no degrau — 2 × 30s/pé</p>'
+            '</div>',
+            unsafe_allow_html=True
+        )
         if st.button("📸 Ver Ilustração: Ativação Patelar & Aquiles", key=f"btn_tend_seg_{sufixo}", use_container_width=True):
             abrir_modal_exercicio("Ativação Tendões Inferiores")
 
         with st.expander("🔥 Ver Rampagem de Aquecimento do Agachamento", expanded=False):
             st.dataframe(gerar_rampagem("Agachamento", sq_peso, st.session_state.barra_kg), use_container_width=True, hide_index=True)
 
-        single_html = ""
-        if cfg["sq_main"][3]:
-            sq_single = arredondar_carga(st.session_state.sq_1rm * cfg["sq_main"][3][0])
-            single_html = f"""
-            <hr style="border-color:#333; margin:10px 0;">
-            <span class="badge-main">Single de Pico Neural</span>
-            <div class="weight-highlight">{sq_single:.1f} kg — {cfg['sq_main'][3][1]} ({cfg['sq_main'][3][2]})</div>
-            <div class="plate-box">💿 Barra: {calcular_anilhas(sq_single, st.session_state.barra_kg)}</div>
-            """
-
-        st.markdown(f"""
-        <div class="workout-card">
-            <span class="badge-main">2. Levantamento Principal</span>
-            <h4 style="margin:6px 0 2px 0;">Agachamento Livre (Back Squat)</h4>
-            <div class="weight-highlight">{sq_peso:.1f} kg — {cfg['sq_main'][1]} ({cfg['sq_main'][2]})</div>
-            <div class="plate-box">💿 Barra: {calcular_anilhas(sq_peso, st.session_state.barra_kg)}</div>
-            <p style="font-size:0.85rem; color:#94a3b8; margin-top:8px; margin-bottom:0;">⏱️ Descanso: 3 a 5 min | Descida controlada (2-3s), subida explosiva.</p>
-            {single_html}
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            montar_card_principal(
+                badge_texto="2. Levantamento Principal",
+                titulo_ex="Agachamento Livre (Back Squat)",
+                peso_trab=sq_peso,
+                series_reps=cfg["sq_main"][1],
+                rpe_trab=cfg["sq_main"][2],
+                barra_kg=st.session_state.barra_kg,
+                dica_descanso="⏱️ Descanso: 3 a 5 min | Descida controlada (2-3s), subida explosiva.",
+                info_single=cfg["sq_main"][3],
+                um_rm=st.session_state.sq_1rm
+            ),
+            unsafe_allow_html=True
+        )
         if st.button("📸 Ver Execução e Imagem: Agachamento Livre", key=f"btn_sq_{sufixo}", use_container_width=True):
             abrir_modal_exercicio("Agachamento Livre")
 
-        st.markdown(f"""
-        <div class="acc-card">
-            <span class="badge-acc">3. Dorsais & Cotovelos</span>
-            <h5 style="margin:5px 0;">Barra Fixa Pronada (Pull-ups)</h5>
-            <p style="margin:0;"><b>Prescrição:</b> {cfg['pullup']} | ⏱️ Descanso: 2 min</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            f'<div class="acc-card"><span class="badge-acc">3. Dorsais & Cotovelos</span>'
+            f'<h5 style="margin:5px 0;">Barra Fixa Pronada (Pull-ups)</h5>'
+            f'<p style="margin:0;"><b>Prescrição:</b> {cfg["pullup"]} | ⏱️ Descanso: 2 min</p></div>',
+            unsafe_allow_html=True
+        )
         if st.button("📸 Ver Execução e Imagem: Barra Fixa Pronada", key=f"btn_pull_{sufixo}", use_container_width=True):
             abrir_modal_exercicio("Barra Fixa Pronada")
 
-        st.markdown(f"""
-        <div class="acc-card">
-            <span class="badge-acc">4. Pegada Brutal, Antebraço & Trapézio</span>
-            <h5 style="margin:5px 0;">Caminhada do Fazendeiro (Heavy Farmer's Walk)</h5>
-            <p style="margin:0;"><b>Prescrição:</b> {cfg['farmer']} | Segure com força máxima sem deixar o ombro cair.</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            f'<div class="acc-card"><span class="badge-acc">4. Pegada Brutal, Antebraço & Trapézio</span>'
+            f'<h5 style="margin:5px 0;">Caminhada do Fazendeiro (Heavy Farmer\'s Walk)</h5>'
+            f'<p style="margin:0;"><b>Prescrição:</b> {cfg["farmer"]} | Segure com força máxima sem deixar o ombro cair.</p></div>',
+            unsafe_allow_html=True
+        )
         if st.button("📸 Ver Execução e Imagem: Farmer's Walk", key=f"btn_fw_{sufixo}", use_container_width=True):
             abrir_modal_exercicio("Farmer's Walk")
 
-        st.markdown(f"""
-        <div class="acc-card">
-            <span class="badge-acc">5. Estabilidade de Core</span>
-            <h5 style="margin:5px 0;">{cfg['core_seg']}</h5>
-            <p style="margin:0;">Trave glúteos e abdômen resistindo à rotação da polia/elástico.</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            f'<div class="acc-card"><span class="badge-acc">5. Estabilidade de Core</span>'
+            f'<h5 style="margin:5px 0;">{cfg["core_seg"]}</h5>'
+            f'<p style="margin:0;">Trave glúteos e abdômen resistindo à rotação da polia/elástico.</p></div>',
+            unsafe_allow_html=True
+        )
         if st.button("📸 Ver Execução e Imagem: Pallof Press", key=f"btn_pal_{sufixo}", use_container_width=True):
             abrir_modal_exercicio("Pallof Press")
 
@@ -951,69 +958,61 @@ with aba_treino:
         bp_peso = arredondar_carga(st.session_state.bp_1rm * cfg["bp_main"][0])
         st.markdown("### 💪 Terça-Feira: Supino Força, Ombros & Blindagem de Bíceps")
 
-        st.markdown("""
-        <div class="tendon-card">
-            <span class="badge-tendon">1. Ativação de Tendões (Pré-Barra)</span>
-            <p style="margin-top:8px; margin-bottom:4px;"><b>• Descompressão & Pegada:</b> Dead Hang (Suspensão passiva na barra fixa) — 2 × 35 segundos</p>
-            <p style="margin-bottom:0px;"><b>• Manguito Rotador:</b> Rotação externa isométrica com elástico — 2 × 20s segurando no final</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            '<div class="tendon-card">'
+            '<span class="badge-tendon">1. Ativação de Tendões (Pré-Barra)</span>'
+            '<p style="margin-top:8px; margin-bottom:4px;"><b>• Descompressão & Pegada:</b> Dead Hang (Suspensão passiva na barra fixa) — 2 × 35 segundos</p>'
+            '<p style="margin-bottom:0px;"><b>• Manguito Rotador:</b> Rotação externa isométrica com elástico — 2 × 20s segurando no final</p>'
+            '</div>',
+            unsafe_allow_html=True
+        )
         if st.button("📸 Ver Ilustração: Dead Hang & Manguito", key=f"btn_tend_ter_{sufixo}", use_container_width=True):
             abrir_modal_exercicio("Ativação Tendões Superiores")
 
         with st.expander("🔥 Ver Rampagem de Aquecimento do Supino Reto", expanded=False):
             st.dataframe(gerar_rampagem("Supino Reto", bp_peso, st.session_state.barra_kg), use_container_width=True, hide_index=True)
 
-        single_html = ""
-        if cfg["bp_main"][3]:
-            bp_single = arredondar_carga(st.session_state.bp_1rm * cfg["bp_main"][3][0])
-            single_html = f"""
-            <hr style="border-color:#333; margin:10px 0;">
-            <span class="badge-main">Single de Pico Neural</span>
-            <div class="weight-highlight">{bp_single:.1f} kg — {cfg['bp_main'][3][1]} ({cfg['bp_main'][3][2]})</div>
-            <div class="plate-box">💿 Barra: {calcular_anilhas(bp_single, st.session_state.barra_kg)}</div>
-            """
-
-        st.markdown(f"""
-        <div class="workout-card">
-            <span class="badge-main">2. Levantamento Principal</span>
-            <h4 style="margin:6px 0 2px 0;">Supino Reto com Barra (Bench Press)</h4>
-            <div class="weight-highlight">{bp_peso:.1f} kg — {cfg['bp_main'][1]} ({cfg['bp_main'][2]})</div>
-            <div class="plate-box">💿 Barra: {calcular_anilhas(bp_peso, st.session_state.barra_kg)}</div>
-            <p style="font-size:0.85rem; color:#94a3b8; margin-top:8px; margin-bottom:0;">⏱️ Descanso: 3 a 5 min | Escápulas retraídas e pés cravados no chão.</p>
-            {single_html}
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            montar_card_principal(
+                badge_texto="2. Levantamento Principal",
+                titulo_ex="Supino Reto com Barra (Bench Press)",
+                peso_trab=bp_peso,
+                series_reps=cfg["bp_main"][1],
+                rpe_trab=cfg["bp_main"][2],
+                barra_kg=st.session_state.barra_kg,
+                dica_descanso="⏱️ Descanso: 3 a 5 min | Escápulas retraídas e pés cravados no chão.",
+                info_single=cfg["bp_main"][3],
+                um_rm=st.session_state.bp_1rm
+            ),
+            unsafe_allow_html=True
+        )
         if st.button("📸 Ver Execução e Imagem: Supino Reto", key=f"btn_bp_{sufixo}", use_container_width=True):
             abrir_modal_exercicio("Supino Reto")
 
-        st.markdown(f"""
-        <div class="acc-card">
-            <span class="badge-acc">3. Força Vertical de Ombros</span>
-            <h5 style="margin:5px 0;">Desenvolvimento Militar em Pé (OHP)</h5>
-            <p style="margin:0;"><b>Prescrição:</b> {cfg['ohp']} | 💿 {calcular_anilhas(float(cfg['ohp'].split()[0]), st.session_state.barra_kg)}</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            f'<div class="acc-card"><span class="badge-acc">3. Força Vertical de Ombros</span>'
+            f'<h5 style="margin:5px 0;">Desenvolvimento Militar em Pé (OHP)</h5>'
+            f'<p style="margin:0;"><b>Prescrição:</b> {cfg["ohp"]} | 💿 {calcular_anilhas(float(cfg["ohp"].split()[0]), st.session_state.barra_kg)}</p></div>',
+            unsafe_allow_html=True
+        )
         if st.button("📸 Ver Execução e Imagem: Desenvolvimento Militar", key=f"btn_ohp_{sufixo}", use_container_width=True):
             abrir_modal_exercicio("Desenvolvimento Militar")
 
-        st.markdown(f"""
-        <div class="acc-card">
-            <span class="badge-acc">4. Tração Horizontal Explosiva</span>
-            <h5 style="margin:5px 0;">Pendlay Row (Remada Curvada saindo do chão)</h5>
-            <p style="margin:0;"><b>Prescrição:</b> {cfg['row']} | 💿 {calcular_anilhas(float(cfg['row'].split()[0]), st.session_state.barra_kg)}</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            f'<div class="acc-card"><span class="badge-acc">4. Tração Horizontal Explosiva</span>'
+            f'<h5 style="margin:5px 0;">Pendlay Row (Remada Curvada saindo do chão)</h5>'
+            f'<p style="margin:0;"><b>Prescrição:</b> {cfg["row"]} | 💿 {calcular_anilhas(float(cfg["row"].split()[0]), st.session_state.barra_kg)}</p></div>',
+            unsafe_allow_html=True
+        )
         if st.button("📸 Ver Execução e Imagem: Pendlay Row", key=f"btn_row_{sufixo}", use_container_width=True):
             abrir_modal_exercicio("Pendlay Row")
 
-        st.markdown(f"""
-        <div class="acc-card">
-            <span class="badge-acc">5. Blindagem do Tendão Distal do Bíceps</span>
-            <h5 style="margin:5px 0;">Rosca Martelo com Halteres (Excêntrica Lenta)</h5>
-            <p style="margin:0;"><b>Prescrição:</b> {cfg['curl']}</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            f'<div class="acc-card"><span class="badge-acc">5. Blindagem do Tendão Distal do Bíceps</span>'
+            f'<h5 style="margin:5px 0;">Rosca Martelo com Halteres (Excêntrica Lenta)</h5>'
+            f'<p style="margin:0;"><b>Prescrição:</b> {cfg["curl"]}</p></div>',
+            unsafe_allow_html=True
+        )
         if st.button("📸 Ver Execução e Imagem: Rosca Martelo", key=f"btn_curl_{sufixo}", use_container_width=True):
             abrir_modal_exercicio("Rosca Martelo Excêntrica")
 
@@ -1021,67 +1020,59 @@ with aba_treino:
         dl_peso = arredondar_carga(st.session_state.dl_1rm * cfg["dl_main"][0])
         st.markdown("### ⚡ Quinta-Feira: Levantamento Terra & Cadeia Posterior")
 
-        st.markdown("""
-        <div class="tendon-card">
-            <span class="badge-tendon">1. Ativação de Tendões & Core (Pré-Barra)</span>
-            <p style="margin-top:8px; margin-bottom:4px;"><b>• Isquiotibiais Proximais:</b> Ponte de Glúteo Unilateral Isométrica — 2 × 30s por perna</p>
-            <p style="margin-bottom:0px;"><b>• Coluna Lombar:</b> Bird-Dog travado (3s no topo) — 2 × 6 reps por lado</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            '<div class="tendon-card">'
+            '<span class="badge-tendon">1. Ativação de Tendões & Core (Pré-Barra)</span>'
+            '<p style="margin-top:8px; margin-bottom:4px;"><b>• Isquiotibiais Proximais:</b> Ponte de Glúteo Unilateral Isométrica — 2 × 30s por perna</p>'
+            '<p style="margin-bottom:0px;"><b>• Coluna Lombar:</b> Bird-Dog travado (3s no topo) — 2 × 6 reps por lado</p>'
+            '</div>',
+            unsafe_allow_html=True
+        )
 
         with st.expander("🔥 Ver Rampagem de Aquecimento do Levantamento Terra", expanded=False):
             st.dataframe(gerar_rampagem("Levantamento Terra", dl_peso, st.session_state.barra_kg), use_container_width=True, hide_index=True)
 
-        single_html = ""
-        if cfg["dl_main"][3]:
-            dl_single = arredondar_carga(st.session_state.dl_1rm * cfg["dl_main"][3][0])
-            single_html = f"""
-            <hr style="border-color:#333; margin:10px 0;">
-            <span class="badge-main">Single de Pico Neural</span>
-            <div class="weight-highlight">{dl_single:.1f} kg — {cfg['dl_main'][3][1]} ({cfg['dl_main'][3][2]})</div>
-            <div class="plate-box">💿 Barra: {calcular_anilhas(dl_single, st.session_state.barra_kg)}</div>
-            """
-
-        st.markdown(f"""
-        <div class="workout-card">
-            <span class="badge-main">2. Levantamento Principal</span>
-            <h4 style="margin:6px 0 2px 0;">Levantamento Terra (Deadlift)</h4>
-            <div class="weight-highlight">{dl_peso:.1f} kg — {cfg['dl_main'][1]} ({cfg['dl_main'][2]})</div>
-            <div class="plate-box">💿 Barra: {calcular_anilhas(dl_peso, st.session_state.barra_kg)}</div>
-            <p style="font-size:0.85rem; color:#94a3b8; margin-top:8px; margin-bottom:0;">⏱️ Descanso: 4 a 5 min | Pouse a barra no solo a cada repetição (Dead Stop).</p>
-            {single_html}
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            montar_card_principal(
+                badge_texto="2. Levantamento Principal",
+                titulo_ex="Levantamento Terra (Deadlift)",
+                peso_trab=dl_peso,
+                series_reps=cfg["dl_main"][1],
+                rpe_trab=cfg["dl_main"][2],
+                barra_kg=st.session_state.barra_kg,
+                dica_descanso="⏱️ Descanso: 4 a 5 min | Pouse a barra no solo a cada repetição (Dead Stop).",
+                info_single=cfg["dl_main"][3],
+                um_rm=st.session_state.dl_1rm
+            ),
+            unsafe_allow_html=True
+        )
         if st.button("📸 Ver Execução e Imagem: Levantamento Terra", key=f"btn_dl_{sufixo}", use_container_width=True):
             abrir_modal_exercicio("Levantamento Terra")
 
-        st.markdown(f"""
-        <div class="acc-card">
-            <span class="badge-acc">3. Força Unilateral & Estabilidade Pélvica</span>
-            <h5 style="margin:5px 0;">Agachamento Búlgaro com Halteres</h5>
-            <p style="margin:0;"><b>Prescrição:</b> {cfg['bulg']}</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            f'<div class="acc-card"><span class="badge-acc">3. Força Unilateral & Estabilidade Pélvica</span>'
+            f'<h5 style="margin:5px 0;">Agachamento Búlgaro com Halteres</h5>'
+            f'<p style="margin:0;"><b>Prescrição:</b> {cfg["bulg"]}</p></div>',
+            unsafe_allow_html=True
+        )
         if st.button("📸 Ver Execução e Imagem: Agachamento Búlgaro", key=f"btn_bulg_{sufixo}", use_container_width=True):
             abrir_modal_exercicio("Agachamento Búlgaro")
 
-        st.markdown(f"""
-        <div class="acc-card">
-            <span class="badge-acc">4. Bloqueio Final de Quadril (Lockout)</span>
-            <h5 style="margin:5px 0;">Elevação Pélvica com Barra (Hip Thrust)</h5>
-            <p style="margin:0;"><b>Prescrição:</b> {cfg['pelv']} | 💿 {calcular_anilhas(float(cfg['pelv'].split()[0]), st.session_state.barra_kg)}</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            f'<div class="acc-card"><span class="badge-acc">4. Bloqueio Final de Quadril (Lockout)</span>'
+            f'<h5 style="margin:5px 0;">Elevação Pélvica com Barra (Hip Thrust)</h5>'
+            f'<p style="margin:0;"><b>Prescrição:</b> {cfg["pelv"]} | 💿 {calcular_anilhas(float(cfg["pelv"].split()[0]), st.session_state.barra_kg)}</p></div>',
+            unsafe_allow_html=True
+        )
         if st.button("📸 Ver Execução e Imagem: Elevação Pélvica", key=f"btn_pelv_{sufixo}", use_container_width=True):
             abrir_modal_exercicio("Elevação Pélvica")
 
-        st.markdown(f"""
-        <div class="acc-card">
-            <span class="badge-acc">5. Blindagem Anti-Extensão Lombar</span>
-            <h5 style="margin:5px 0;">{cfg['core_qui']}</h5>
-            <p style="margin:0;">Mantenha costelas fechadas e glúteos contraídos o tempo inteiro.</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            f'<div class="acc-card"><span class="badge-acc">5. Blindagem Anti-Extensão Lombar</span>'
+            f'<h5 style="margin:5px 0;">{cfg["core_qui"]}</h5>'
+            f'<p style="margin:0;">Mantenha costelas fechadas e glúteos contraídos o tempo inteiro.</p></div>',
+            unsafe_allow_html=True
+        )
         if st.button("📸 Ver Execução e Imagem: Ab Wheel / Core", key=f"btn_abw_{sufixo}", use_container_width=True):
             abrir_modal_exercicio("Ab Wheel")
 
@@ -1089,46 +1080,49 @@ with aba_treino:
         bp_pausa_peso = arredondar_carga(st.session_state.bp_1rm * cfg["bp_pausa"][0])
         st.markdown("### 🎯 Sexta-Feira: Supino Pausado (Força de Arrancada) & Tríceps")
 
-        st.markdown("""
-        <div class="tendon-card">
-            <span class="badge-tendon">1. Preparação de Tendão Peitoral & Tríceps</span>
-            <p style="margin-top:8px; margin-bottom:4px;"><b>• Escápulas:</b> Band Pull-Apart — 2 × 15 repetições pausando 1s aberto</p>
-            <p style="margin-bottom:0px;"><b>• Cotovelos:</b> Sustentação isométrica no topo das paralelas — 2 × 25 segundos</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            '<div class="tendon-card">'
+            '<span class="badge-tendon">1. Preparação de Tendão Peitoral & Tríceps</span>'
+            '<p style="margin-top:8px; margin-bottom:4px;"><b>• Escápulas:</b> Band Pull-Apart — 2 × 15 repetições pausando 1s aberto</p>'
+            '<p style="margin-bottom:0px;"><b>• Cotovelos:</b> Sustentação isométrica no topo das paralelas — 2 × 25 segundos</p>'
+            '</div>',
+            unsafe_allow_html=True
+        )
 
         with st.expander("🔥 Ver Rampagem do Supino Pausado", expanded=False):
             st.dataframe(gerar_rampagem("Supino Pausado", bp_pausa_peso, st.session_state.barra_kg), use_container_width=True, hide_index=True)
 
-        st.markdown(f"""
-        <div class="workout-card">
-            <span class="badge-main">2. Levantamento Técnico / Taxa de Disparo</span>
-            <h4 style="margin:6px 0 2px 0;">Supino Reto com Pausa de 3 Segundos no Peito</h4>
-            <div class="weight-highlight">{bp_pausa_peso:.1f} kg — {cfg['bp_pausa'][1]} ({cfg['bp_pausa'][2]})</div>
-            <div class="plate-box">💿 Barra: {calcular_anilhas(bp_pausa_peso, st.session_state.barra_kg)}</div>
-            <p style="font-size:0.85rem; color:#94a3b8; margin-top:8px; margin-bottom:0;">⏱️ Descanso: 3 min | Conte 1001, 1002, 1003 com a barra imóvel no esterno e exploda!</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            montar_card_principal(
+                badge_texto="2. Levantamento Técnico / Taxa de Disparo",
+                titulo_ex="Supino Reto com Pausa de 3 Segundos no Peito",
+                peso_trab=bp_pausa_peso,
+                series_reps=cfg["bp_pausa"][1],
+                rpe_trab=cfg["bp_pausa"][2],
+                barra_kg=st.session_state.barra_kg,
+                dica_descanso="⏱️ Descanso: 3 min | Conte 1001, 1002, 1003 com a barra imóvel no esterno e exploda!",
+                info_single=None
+            ),
+            unsafe_allow_html=True
+        )
         if st.button("📸 Ver Execução e Imagem: Supino Pausado (3s)", key=f"btn_bpp_{sufixo}", use_container_width=True):
             abrir_modal_exercicio("Supino Pausado")
 
-        st.markdown(f"""
-        <div class="acc-card">
-            <span class="badge-acc">3. Força Bruta de Tríceps & Peitoral Inferior</span>
-            <h5 style="margin:5px 0;">Paralelas (Weighted Dips)</h5>
-            <p style="margin:0;"><b>Prescrição:</b> {cfg['dips']} | ⏱️ Descanso: 2 a 3 min</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            f'<div class="acc-card"><span class="badge-acc">3. Força Bruta de Tríceps & Peitoral Inferior</span>'
+            f'<h5 style="margin:5px 0;">Paralelas (Weighted Dips)</h5>'
+            f'<p style="margin:0;"><b>Prescrição:</b> {cfg["dips"]} | ⏱️ Descanso: 2 a 3 min</p></div>',
+            unsafe_allow_html=True
+        )
         if st.button("📸 Ver Execução e Imagem: Paralelas (Dips)", key=f"btn_dips_{sufixo}", use_container_width=True):
             abrir_modal_exercicio("Paralelas")
 
-        st.markdown(f"""
-        <div class="acc-card">
-            <span class="badge-acc">4. Blindagem Posterior de Ombro & Manguito</span>
-            <h5 style="margin:5px 0;">Face Pull na Polia Alta (Pausa de 2s atrás)</h5>
-            <p style="margin:0;"><b>Prescrição:</b> 3 a 4 séries × 15 reps focando em rotação externa máxima.</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            f'<div class="acc-card"><span class="badge-acc">4. Blindagem Posterior de Ombro & Manguito</span>'
+            f'<h5 style="margin:5px 0;">Face Pull na Polia Alta (Pausa de 2s atrás)</h5>'
+            f'<p style="margin:0;"><b>Prescrição:</b> 3 a 4 séries × 15 reps focando em rotação externa máxima.</p></div>',
+            unsafe_allow_html=True
+        )
         if st.button("📸 Ver Execução e Imagem: Face Pull", key=f"btn_fp_{sufixo}", use_container_width=True):
             abrir_modal_exercicio("Face Pull")
 
@@ -1188,23 +1182,25 @@ with aba_tendoes:
     st.subheader("🧬 Engenharia de Tendões de Aço (Aos 43+ Anos)")
     c_t1, c_t2 = st.columns(2)
     with c_t1:
-        st.markdown("""
-        <div class="tendon-card">
-            <h4>🥤 1. Janela Bioquímica (45–60 min Pré-Treino)</h4>
-            <p>• <b>15g de Colágeno Hidrolisado Tipo 1</b> (ou gelatina sem sabor)</p>
-            <p>• <b>100mg de Vitamina C</b> (suco de meio limão ou ácido ascórbico)</p>
-            <p>• <b>Redução de Açúcar Refinado:</b> Evita a glicação (AGEs) que resseca e deixa o tendão quebradiço.</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            '<div class="tendon-card">'
+            '<h4>🥤 1. Janela Bioquímica (45–60 min Pré-Treino)</h4>'
+            '<p>• <b>15g de Colágeno Hidrolisado Tipo 1</b> (ou gelatina sem sabor)</p>'
+            '<p>• <b>100mg de Vitamina C</b> (suco de meio limão ou ácido ascórbico)</p>'
+            '<p>• <b>Redução de Açúcar Refinado:</b> Evita a glicação (AGEs) que resseca e deixa o tendão quebradiço.</p>'
+            '</div>',
+            unsafe_allow_html=True
+        )
     with c_t2:
-        st.markdown("""
-        <div class="tendon-card">
-            <h4>⚙️ 2. As 3 Regras Mecânicas Durante o Treino</h4>
-            <p>• <b>Nunca solte o peso (Sem quicar):</b> Desça a barra em 2 a 3s. O controle na frenagem espessa o tendão.</p>
-            <p>• <b>Isometrias de 30-45s no Aquecimento:</b> Alinham as fibras de colágeno e geram analgesia articular imediata.</p>
-            <p>• <b>Respeite as Semanas 4 e 8 (Deload):</b> O músculo recupera em 48h; o tendão usa a semana leve para cicatrizar microfissuras.</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            '<div class="tendon-card">'
+            '<h4>⚙️ 2. As 3 Regras Mecânicas Durante o Treino</h4>'
+            '<p>• <b>Nunca solte o peso (Sem quicar):</b> Desça a barra em 2 a 3s. O controle na frenagem espessa o tendão.</p>'
+            '<p>• <b>Isometrias de 30-45s no Aquecimento:</b> Alinham as fibras de colágeno e geram analgesia articular imediata.</p>'
+            '<p>• <b>Respeite as Semanas 4 e 8 (Deload):</b> O músculo recupera em 48h; o tendão usa a semana leve para cicatrizar microfissuras.</p>'
+            '</div>',
+            unsafe_allow_html=True
+        )
 
 # =============================================================
 # ABA 4: SIMULADOR DE PROJEÇÃO DE FORÇA (1 ANO)
@@ -1237,20 +1233,22 @@ with aba_cf:
     st.subheader("🏃 Como Usar o CrossFit a Favor da Força Bruta")
     col_cf1, col_cf2 = st.columns(2)
     with col_cf1:
-        st.markdown("""
-        <div class="acc-card">
-            <h4>🫁 Quarta-Feira: Flushing Aeróbico (Zona 2)</h4>
-            <p>• <b>Frequência Cardíaca:</b> Ritmo conversacional (RPE 6).</p>
-            <p>• <b>Cargas:</b> Máximo 30% a 40% do 1RM ou kettlebells leves.</p>
-            <p>• <b>Função fisiológica:</b> Aumentar capilarização sanguínea para acelerar a ressíntese de ATP-CP entre as séries pesadas de quinta e sexta.</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            '<div class="acc-card">'
+            '<h4>🫁 Quarta-Feira: Flushing Aeróbico (Zona 2)</h4>'
+            '<p>• <b>Frequência Cardíaca:</b> Ritmo conversacional (RPE 6).</p>'
+            '<p>• <b>Cargas:</b> Máximo 30% a 40% do 1RM ou kettlebells leves.</p>'
+            '<p>• <b>Função fisiológica:</b> Aumentar capilarização sanguínea para acelerar a ressíntese de ATP-CP entre as séries pesadas de quinta e sexta.</p>'
+            '</div>',
+            unsafe_allow_html=True
+        )
     with col_cf2:
-        st.markdown("""
-        <div class="acc-card">
-            <h4>⚡ Sábado: Condicionamento Geral & Mobilidade</h4>
-            <p>• <b>Regra de Ouro:</b> Pare qualquer série antes da falha concêntrica.</p>
-            <p>• <b>Evite:</b> Alto volume de LPO pesado ou saltos em profundidade excessivos para poupar o tendão patelar e lombar.</p>
-            <p>• <b>Domingo:</b> Descanso absoluto do Sistema Nervoso Central.</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            '<div class="acc-card">'
+            '<h4>⚡ Sábado: Condicionamento Geral & Mobilidade</h4>'
+            '<p>• <b>Regra de Ouro:</b> Pare qualquer série antes da falha concêntrica.</p>'
+            '<p>• <b>Evite:</b> Alto volume de LPO pesado ou saltos em profundidade excessivos para poupar o tendão patelar e lombar.</p>'
+            '<p>• <b>Domingo:</b> Descanso absoluto do Sistema Nervoso Central.</p>'
+            '</div>',
+            unsafe_allow_html=True
+        )
